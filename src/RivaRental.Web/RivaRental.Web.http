@@ -1,0 +1,31 @@
+@RivaRental.Web_HostAddress = http://localhost:5175
+
+###
+POST {{RivaRental.Web_HostAddress}}/rent/
+Content-Type: application/json
+{
+    "BoatType":"IseoSuper"
+}
+
+###
+POST {{RivaRental.Web_HostAddress}}/rent/
+Content-Type: application/json
+{
+    "BoatType":"Diable"
+}
+
+###
+POST {{RivaRental.Web_HostAddress}}/return/
+Content-Type: application/json
+{
+    "BookingNumber": "Hello Rent!"
+}
+
+POST {{RivaRental.Web_HostAddress}}/book-extra/
+Content-Type: application/json
+{
+    "BookingNumber": "Hello Rent!",
+    "Extra": {
+        "NumberOfCrew": 123
+    }
+}

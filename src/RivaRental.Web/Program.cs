@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using RivaRental.Domain;
 using RivaRental.Web;
 
@@ -16,16 +17,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/rent", (RentRequest rentRequest, RentalService service) =>
+app.MapPost("/rent", (RentRequest rentRequest, RentalService service, HttpContext ctx) =>
 {
     var result = service.TryBook(rentRequest.BoatType);
 
-    return result.additional 
-        ? Results.Accepted("/book-extra", result.boat) 
-        : Results.Ok(result.boat);
+    if (result.additional)
+    {
+        ctx.Response.Headers.Append("extra-possible", "true");
+    }
+    
+    return Results.AcceptedAtRoute("Booking", new Booking
+        {
+            BookingNumber = $"{DateTimeOffset.UtcNow.UtcTicks}_{result.boat.GetType().Name}",
+        });
 });
 
-app.MapPost("/book-extra", () => "Extra!");
+app.MapGet("/booking", () => "Extra!").WithName("Booking");
 
 app.MapPost("/return", (ReturnRequest returnRequest, RentalService service) => "Return!");
 

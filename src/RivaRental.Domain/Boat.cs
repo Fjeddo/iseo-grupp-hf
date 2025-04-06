@@ -13,7 +13,8 @@ public abstract class Boat
 
 public class IseoSuper : Boat
 {
-    internal override double CalculatePrice(int hours, int walkingHours) => BaseHourlyRate * hours + BaseWorkingRate * walkingHours;
+    internal override double CalculatePrice(int hours, int walkingHours) 
+        => BaseHourlyRate * hours + BaseWorkingRate * walkingHours;
 }
 
 public class Dolceriva : Boat

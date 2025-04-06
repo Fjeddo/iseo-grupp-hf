@@ -25,16 +25,26 @@ app.MapPost("/rent", (RentRequest rentRequest, RentalService service, HttpContex
     {
         ctx.Response.Headers.Append("extra-possible", "true");
     }
-    
+
     return Results.AcceptedAtRoute("Booking", new Booking
-        {
-            BookingNumber = $"{DateTimeOffset.UtcNow.UtcTicks}_{result.boat.GetType().Name}",
-        });
+    {
+        BookingNumber = $"{DateTimeOffset.UtcNow.UtcTicks}_{result.boat.GetType().Name}",
+        Boat = new IseoSuper { },
+        StartTime = DateTime.Now,
+        StartEngineHours = 42
+
+    });
 });
 
 app.MapGet("/booking", () => "Extra!").WithName("Booking");
 
-app.MapPost("/return", (ReturnRequest returnRequest, RentalService service) => "Return!");
+app.MapPost("/return", (ReturnRequest returnRequest, RentalService service) =>
+{
+    var price = service.ReturnBoatAndGetTotalPrice(returnRequest.BookingNumber);
+    
+    return new ReturnBoatResponse { TotalPrice = price };
+});
 
 app.Run();
 
+;

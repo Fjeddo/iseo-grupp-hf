@@ -24,17 +24,14 @@ var restApi = app.MapGroup("rest/api");
 
 restApi.MapPost("/rent", (RentRequest rentRequest, RentalService service, HttpContext ctx) =>
 {
-    var (additional, boat) = service.TryBook(rentRequest.BoatType);
+    var result = service.TryRent(rentRequest.BoatType, rentRequest.StartTime);
 
-    if (additional)
+    if (result.additional)
     {
         ctx.Response.Headers.Append("extra-possible", "true");
     }
-    
-    return Results.AcceptedAtRoute("Booking", new
-        {
-            BookingNumber = $"{DateTimeOffset.UtcNow.UtcTicks}_{boat.GetType().Name}",
-        });
+
+    return Results.AcceptedAtRoute("Booking", result.bookingNumber);
 });
 
 restApi.MapGet("/booking", (string bookingNumber, HttpContext ctx) =>

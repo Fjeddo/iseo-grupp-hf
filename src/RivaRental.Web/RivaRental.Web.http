@@ -22,7 +22,7 @@ GET https://localhost:7151/booking?Id=ba8106a6-fe17-4028-ba4b-4c91295ce2ca&Booki
 POST {{RivaRental.Web_HostAddress}}/return/
 Content-Type: application/json
 {
-    "BookingNumber": "Hello Rent!"
+    "BookingNumber": "abc123"
 }
 
 ###

@@ -33,6 +33,7 @@ restApi.MapPost("/rent", (RentRequest rentRequest, RentalService service, HttpCo
     }
 
     return Results.AcceptedAtRoute("Booking", result.bookingNumber);
+    
 });
 
 restApi.MapGet("/booking", (string bookingNumber, HttpContext ctx) =>
@@ -58,7 +59,16 @@ restApi.MapGet("/booking", (string bookingNumber, HttpContext ctx) =>
     return Results.Ok("Extra!");
 }).WithName("Booking");
 
+
+app.MapPost("/return", (ReturnRequest returnRequest, RentalService service) =>
+{
+    var price = service.ReturnBoatAndGetTotalPrice(returnRequest.BookingNumber);
+    
+    return new ReturnBoatResponse { TotalPrice = price };
+});
+
 restApi.MapPost("/return", (ReturnRequest returnRequest, RentalService service) => "Return!");
 
 app.Run();
 
+;

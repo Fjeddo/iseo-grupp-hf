@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="static\diable.png" />
+    <None Remove="static\dolceriva.png" />
+    <None Remove="static\iseosuper.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="static\diable.png" />
+    <Content Include="static\dolceriva.png" />
+    <Content Include="static\iseosuper.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
   </ItemGroup>
 

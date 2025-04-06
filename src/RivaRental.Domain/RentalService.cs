@@ -2,7 +2,12 @@
 
 public class RentalService
 {
-    private readonly BookingRepository _bookingRepository = new BookingRepository();
+    private readonly IBookingRepository _bookingRepository;
+
+    public RentalService(IBookingRepository bookingRepository)
+    {
+        _bookingRepository = bookingRepository;
+    }
 
     public (bool additional, string bookingNumber) TryRent(
         string type,

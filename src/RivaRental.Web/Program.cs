@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<PriceCalculator>();
+builder.Services.AddSingleton<IBookingRepository, BookingRepository>();
 builder.Services.AddSingleton<RentalService>();
 
 var app = builder.Build();

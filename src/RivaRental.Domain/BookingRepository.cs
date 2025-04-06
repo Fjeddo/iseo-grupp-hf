@@ -1,8 +1,13 @@
 ﻿namespace RivaRental.Domain;
 
-public class BookingRepository
+public interface IBookingRepository
 {
-    private readonly List<Booking> _bookings = new List<Booking>();
+    void Add(Booking booking);
+}
+
+public class BookingRepository : IBookingRepository
+{
+    private readonly List<Booking> _bookings = new();
 
     public void Add(Booking booking)
     {

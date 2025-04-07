@@ -1,4 +1,4 @@
-@RivaRental.Web_HostAddress = http://localhost:5175
+@RivaRental.Web_HostAddress = http://localhost:5175/rest/api
 
 ###
 POST {{RivaRental.Web_HostAddress}}/rent/

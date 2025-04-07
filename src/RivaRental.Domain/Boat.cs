@@ -6,7 +6,7 @@ public abstract class Boat
     protected double BaseHourlyRate => 456.789;
     public virtual bool CanIncludeAdditonalCosts => false;
 
-    internal abstract double CalculatePrice(int hours, int walkingHours);
+    internal abstract double CalculatePrice(int hours, double walkingHours);
     public double WorkingRate { get; }
     public double HourlyRate { get; }
     public string RegistrationNumber { get; }
@@ -14,13 +14,13 @@ public abstract class Boat
 
 public class IseoSuper : Boat
 {
-    internal override double CalculatePrice(int hours, int walkingHours)
+    internal override double CalculatePrice(int hours, double walkingHours)
         => BaseHourlyRate * hours + BaseWorkingRate * walkingHours;
 }
 
 public class Dolceriva : Boat
 {
-    internal override double CalculatePrice(int hours, int walkingHours)
+    internal override double CalculatePrice(int hours, double walkingHours)
         => BaseHourlyRate * hours * 1.3 + BaseWorkingRate * walkingHours * 1.5;
 }
 
@@ -28,6 +28,6 @@ public class Diable : Boat
 {
     public override bool CanIncludeAdditonalCosts => true;
 
-    internal override double CalculatePrice(int hours, int walkingHours)
+    internal override double CalculatePrice(int hours, double walkingHours)
         => BaseHourlyRate * hours * 2.1 + BaseWorkingRate * walkingHours * 4;
 }

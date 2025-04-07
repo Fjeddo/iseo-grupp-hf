@@ -25,15 +25,19 @@ var restApi = app.MapGroup("rest/api");
 
 restApi.MapPost("/rent", (RentRequest rentRequest, RentalService service, HttpContext ctx) =>
 {
-    var result = service.TryRent(rentRequest.BoatType, rentRequest.StartTime);
+    var result = service.TryRent(
+        rentRequest.BoatType,
+        rentRequest.StartTime,
+        rentRequest.StartWalkingHours);
 
     if (result.additional)
     {
         ctx.Response.Headers.Append("extra-possible", "true");
     }
 
-    return Results.AcceptedAtRoute("Booking", result.bookingNumber);
-    
+    //return Results.AcceptedAtRoute("Booking", routeValues: result.bookingNumber);
+    return Results.AcceptedAtRoute("Booking", new { BookingNumber = result.bookingNumber });
+
 });
 
 restApi.MapGet("/booking", (string bookingNumber, HttpContext ctx) =>
@@ -60,10 +64,10 @@ restApi.MapGet("/booking", (string bookingNumber, HttpContext ctx) =>
 }).WithName("Booking");
 
 
-app.MapPost("/return", (ReturnRequest returnRequest, RentalService service) =>
+restApi.MapPost("/return", (ReturnRequest returnRequest, RentalService service) =>
 {
-    var price = service.ReturnBoatAndGetTotalPrice(returnRequest.BookingNumber);
-    
+    var price = service.ReturnBoatAndGetTotalPrice(returnRequest.BookingNumber, returnRequest.EndWalkingHours);
+
     return new ReturnBoatResponse { TotalPrice = price };
 });
 
@@ -71,4 +75,7 @@ restApi.MapPost("/return", (ReturnRequest returnRequest, RentalService service) 
 
 app.Run();
 
-;
+public partial class Program
+{
+
+}
